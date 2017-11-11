@@ -3,9 +3,12 @@ import random
 import string
 from utils.abstract_keyboard import *
 from utils.abstract_keyboard_display import *
+from utils import PhysicalKeyboard
+
+kbd = PhysicalKeyboard()
 
 def generate_sequence():
-    seq = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10))
+    seq = ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
     print(seq)
     return seq
 
@@ -13,13 +16,13 @@ def start_sequence(seq, n,delay):
     if n <= len(seq):
         for x in xrange(n):
             print seq[x]
+            kbd.set_key_colour(seq[x].upper(), Colours(100, 0, 0))
             time.sleep(delay)
 
 def welcome():
     print("welcome to the Follow Me game !")
 
 def main():
-
     # game logic
     welcome()
     seq = generate_sequence()
