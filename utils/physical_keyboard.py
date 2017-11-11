@@ -26,7 +26,7 @@ class PhysicalKeyboard(object):
             # Load keycodes from logiPy
             self.keys[key] = {
                 "data" : KeyData(),
-                "keycode" : getattr(logi_led, key),
+                "keycode" : int(getattr(logi_led, key)),
                 "rows" : data["rows"]
             }
 
