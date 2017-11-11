@@ -1,0 +1,3 @@
+[submodule "logiPy"]
+	path = logiPy
+	url = git@github.com:Logitech/logiPy.git
