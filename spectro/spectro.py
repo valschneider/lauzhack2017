@@ -13,7 +13,6 @@ class Spectro(object):
             keys = self.phys_kbd.layout["rows"][row]
 
             keys_to_lit = min(freq / 10, len(keys))
-            print keys_to_lit
             for key in keys[0:keys_to_lit]:
                 print key
                 self.phys_kbd.set_key_colour(key, Colours(0, 100, 100))
