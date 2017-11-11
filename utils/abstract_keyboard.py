@@ -1,10 +1,10 @@
 from collections import namedtuple
 
-Colors = namedtuple('Colors', ['r', 'g', 'b'])
+Colours = namedtuple('Colours', ['r', 'g', 'b'])
 
 class KeyData(object):
     def __init__(self):
-        self.colors = Colors(0, 0, 0)
+        self.colours = Colours(0, 0, 0)
 
 class AbstractKeyboard(object):
     def __init__(self, width=6, length=22):

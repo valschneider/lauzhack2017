@@ -19,7 +19,7 @@ class AbstractKeyboardDisplay:
             for y in range(0,self.abs_key.width - 1):
                 key = Rectangle(Point(50+self.size*x,50+ self.size*y), Point(50+self.size*x+self.size, 50+self.size*y+self.size))
                 #key.setFill('midnightblue')
-                key.setFill('#%02x%02x%02x' % (self.abs_key.keys[y][x].colors.r, self.abs_key.keys[y][x].colors.g, self.abs_key.keys[y][x].colors.b))
+                key.setFill('#%02x%02x%02x' % (self.abs_key.keys[y][x].colours.r, self.abs_key.keys[y][x].colours.g, self.abs_key.keys[y][x].colours.b))
                 key.draw(self.win)
 
     def wait_user_interaction(self):
