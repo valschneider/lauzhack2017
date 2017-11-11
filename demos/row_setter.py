@@ -11,10 +11,12 @@ from utils import Colours
 kbd = PhysicalKeyboard()
 
 for idx, row in kbd.layout["rows"].iteritems():
-    for key in row:
-        if (idx % 3) == 0:
-            kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(100, 0, 0))
-        elif (idx + 1 % 3) == 0:
-            kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(0, 100, 0))
-        elif (idx + 2 % 3) == 0:
-            kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(0, 0, 100))
+    for col, key in enumerate(row):
+        if (idx % 2) == 0:
+            kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(
+                2*col, 3*col, 4*col
+            ))
+        else:
+            kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(
+                4*col, 3*col, 2*col
+            ))
