@@ -4,7 +4,7 @@ import os
 import time
 
 from importlib import import_module
-from abstract_keyboard import KeyData
+from abstract_keyboard import KeyData, Colours
 
 basepath = os.path.dirname(os.path.abspath(__file__))
 basepath = os.path.join(basepath, os.pardir)
@@ -22,6 +22,9 @@ class PhysicalKeyboard(object):
             layout = json.load(fh)
 
         self.keys = {}
+        self.layout = {}
+        self.layout["rows"] = {}
+
         for key, data in layout["keys"].iteritems():
             # Load keycodes from logiPy
             self.keys[key] = {
@@ -30,20 +33,27 @@ class PhysicalKeyboard(object):
                 "rows" : data["rows"]
             }
 
+            for row in data["rows"]:
+                if row not in self.layout["rows"].keys():
+                    self.layout["rows"][row] = []
+
+                self.layout["rows"][row].append(key)
+
         logi_led.logi_led_init()
         time.sleep(1)
-        self.stop_effects()
 
     def __del__(self):
         logi_led.logi_led_shutdown()
 
     def stop_effects(self):
-        logi_led.logi_led_stop_effects()
+        return logi_led.logi_led_stop_effects()
 
-    def set_all_colour(self):
-        logi_led.logi_led_set_lighting(100, 0, 0)
+    def set_all_colour(self, colour):
+        return logi_led.logi_led_set_lighting(
+            colour.r, colour.g, colour.b
+        )
 
-    def set_key_colour(self, keycode):
-        res = logi_led.logi_led_set_lighting_for_key_with_hid_code(keycode, 100, 0, 0)
-        if not res:
-            raise IOError("Couldn't set key {} colour".format(keycode))
+    def set_key_colour(self, keycode, colour):
+        return logi_led.logi_led_set_lighting_for_key_with_scan_code(
+            keycode, colour.r, colour.g, colour.b
+        )
