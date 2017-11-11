@@ -40,6 +40,9 @@ class PhysicalKeyboard(object):
     def stop_effects(self):
         logi_led.logi_led_stop_effects()
 
+    def set_all_colour(self):
+        logi_led.logi_led_set_lighting(100, 0, 0)
+
     def set_key_colour(self, keycode):
         res = logi_led.logi_led_set_lighting_for_key_with_hid_code(keycode, 100, 0, 0)
         if not res:
