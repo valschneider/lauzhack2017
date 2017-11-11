@@ -3,6 +3,8 @@ import sys
 import os
 import time
 
+from collections import OrderedDict
+
 from importlib import import_module
 from abstract_keyboard import KeyData, Colours
 
@@ -19,7 +21,7 @@ class PhysicalKeyboard(object):
         layout_file = os.path.join(layout_dir, model + ".json")
 
         with open(layout_file, 'r') as fh:
-            layout = json.load(fh)
+            layout = json.load(fh, object_pairs_hook=OrderedDict)
 
         self.keys = {}
         self.layout = {}
