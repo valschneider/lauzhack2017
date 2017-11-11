@@ -12,3 +12,8 @@ class AbstractKeyboard(object):
         self.length = length
 
         self.keys = [[KeyData() for j in xrange(length)] for i in xrange(width)]
+
+    def clear(self):
+   		for x in xrange(self.length):
+			for y in xrange(self.width):
+				self.keys[y][x].colors = Colors(0,0,0)

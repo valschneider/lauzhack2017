@@ -2,7 +2,6 @@
 '''
 
 from graphics import *
-#from webcolors import *
 from abstract_keyboard import *
 
 class AbstractKeyboardDisplay:
