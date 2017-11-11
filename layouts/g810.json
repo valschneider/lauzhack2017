@@ -1,0 +1,321 @@
+{
+    "length": 21,
+    "width": 6,
+
+    "keys": {
+	"ESC" : {
+	    "rows" : [0]
+	},
+	"F1" : {
+	    "rows" : [0]
+	},
+	"F2" : {
+	    "rows" : [0]
+	},
+	"F3" : {
+	    "rows" : [0]
+	},
+	"F4" : {
+	    "rows" : [0]
+	},
+	"F5" : {
+	    "rows" : [0]
+	},
+	"F6" : {
+	    "rows" : [0]
+	},
+	"F7" : {
+	    "rows" : [0]
+	},
+	"F8" : {
+	    "rows" : [0]
+	},
+	"F9" : {
+	    "rows" : [0]
+	},
+	"F10" : {
+	    "rows" : [0]
+	},
+	"F11" : {
+	    "rows" : [0]
+	},
+	"F12" : {
+	    "rows" : [0]
+	},
+	"PRINT_SCREEN" : {
+	    "rows" : [0]
+	},
+	"SCROLL_LOCK" : {
+	    "rows" : [0]
+	},
+	"PAUSE_BREAK" : {
+	    "rows" : [0]
+	},
+	"TILDE" : {
+	    "rows" : [1]
+	},
+	"ONE" : {
+	    "rows" : [1]
+	},
+	"TWO" : {
+	    "rows" : [1]
+	},
+	"THREE" : {
+	    "rows" : [1]
+	},
+	"FOUR" : {
+	    "rows" : [1]
+	},
+	"FIVE" : {
+	    "rows" : [1]
+	},
+	"SIX" : {
+	    "rows" : [1]
+	},
+	"SEVEN" : {
+	    "rows" : [1]
+	},
+	"EIGHT" : {
+	    "rows" : [1]
+	},
+	"NINE" : {
+	    "rows" : [1]
+	},
+	"ZERO" : {
+	    "rows" : [1]
+	},
+	"MINUS" : {
+	    "rows" : [1]
+	},
+	"EQUALS" : {
+	    "rows" : [1]
+	},
+	"BACKSPACE" : {
+	    "rows" : [1]
+	},
+	"INSERT" : {
+	    "rows" : [1]
+	},
+	"HOME" : {
+	    "rows" : [1]
+	},
+	"PAGE_UP" : {
+	    "rows" : [1]
+	},
+	"NUM_LOCK" : {
+	    "rows" : [1]
+	},
+	"NUM_SLASH" : {
+	    "rows" : [1]
+	},
+	"NUM_ASTERISK" : {
+	    "rows" : [1]
+	},
+	"NUM_MINUS" : {
+	    "rows" : [1]
+	},
+	"TAB" : {
+	    "rows" : [2]
+	},
+	"Q" : {
+	    "rows" : [2]
+	},
+	"W" : {
+	    "rows" : [2]
+	},
+	"E" : {
+	    "rows" : [2]
+	},
+	"R" : {
+	    "rows" : [2]
+	},
+	"T" : {
+	    "rows" : [2]
+	},
+	"Y" : {
+	    "rows" : [2]
+	},
+	"U" : {
+	    "rows" : [2]
+	},
+	"I" : {
+	    "rows" : [2]
+	},
+	"O" : {
+	    "rows" : [2]
+	},
+	"P" : {
+	    "rows" : [2]
+	},
+	"OPEN_BRACKET" : {
+	    "rows" : [2]
+	},
+	"CLOSE_BRACKET" : {
+	    "rows" : [2]
+	},
+	"BACKSLASH" : {
+	    "rows" : [2]
+	},
+	"KEYBOARD_DELETE" : {
+	    "rows" : [2]
+	},
+	"END" : {
+	    "rows" : [2]
+	},
+	"PAGE_DOWN" : {
+	    "rows" : [2]
+	},
+	"NUM_SEVEN" : {
+	    "rows" : [2]
+	},
+	"NUM_EIGHT" : {
+	    "rows" : [2]
+	},
+	"NUM_NINE" : {
+	    "rows" : [2]
+	},
+	"NUM_PLUS" : {
+	    "rows" : [2]
+	},
+	"CAPS_LOCK" : {
+	    "rows" : [3]
+	},
+	"A" : {
+	    "rows" : [3]
+	},
+	"S" : {
+	    "rows" : [3]
+	},
+	"D" : {
+	    "rows" : [3]
+	},
+	"F" : {
+	    "rows" : [3]
+	},
+	"G" : {
+	    "rows" : [3]
+	},
+	"H" : {
+	    "rows" : [3]
+	},
+	"J" : {
+	    "rows" : [3]
+	},
+	"K" : {
+	    "rows" : [3]
+	},
+	"L" : {
+	    "rows" : [3]
+	},
+	"SEMICOLON" : {
+	    "rows" : [3]
+	},
+	"APOSTROPHE" : {
+	    "rows" : [3]
+	},
+	"ENTER" : {
+	    "rows" : [3]
+	},
+	"NUM_FOUR" : {
+	    "rows" : [3]
+	},
+	"NUM_FIVE" : {
+	    "rows" : [3]
+	},
+	"NUM_SIX" : {
+	    "rows" : [3]
+	},
+	"LEFT_SHIFT" : {
+	    "rows" : [4]
+	},
+	"Z" : {
+	    "rows" : [4]
+	},
+	"X" : {
+	    "rows" : [4]
+	},
+	"C" : {
+	    "rows" : [4]
+	},
+	"V" : {
+	    "rows" : [4]
+	},
+	"B" : {
+	    "rows" : [4]
+	},
+	"N" : {
+	    "rows" : [4]
+	},
+	"M" : {
+	    "rows" : [4]
+	},
+	"COMMA" : {
+	    "rows" : [4]
+	},
+	"PERIOD" : {
+	    "rows" : [4]
+	},
+	"FORWARD_SLASH" : {
+	    "rows" : [4]
+	},
+	"RIGHT_SHIFT" : {
+	    "rows" : [4]
+	},
+	"ARROW_UP" : {
+	    "rows" : [4]
+	},
+	"NUM_ONE" : {
+	    "rows" : [4]
+	},
+	"NUM_TWO" : {
+	    "rows" : [4]
+	},
+	"NUM_THREE" : {
+	    "rows" : [4]
+	},
+	"NUM_ENTER" : {
+	    "rows" : [4]
+	},
+	"LEFT_CONTROL" : {
+	    "rows" : [5]
+	},
+	"LEFT_WINDOWS" : {
+	    "rows" : [5]
+	},
+	"LEFT_ALT" : {
+	    "rows" : [5]
+	},
+	"SPACE" : {
+	    "rows" : [5]
+	},
+	"RIGHT_ALT" : {
+	    "rows" : [5]
+	},
+	"RIGHT_WINDOWS" : {
+	    "rows" : [5]
+	},
+	"APPLICATION_SELECT" : {
+	    "rows" : [5]
+	},
+	"RIGHT_CONTROL" : {
+	    "rows" : [5]
+	},
+	"ARROW_LEFT" : {
+	    "rows" : [5]
+	},
+	"ARROW_DOWN" : {
+	    "rows" : [5]
+	},
+	"ARROW_RIGHT" : {
+	    "rows" : [5]
+	},
+	"NUM_ZERO" : {
+	    "rows" : [5]
+	},
+	"NUM_PERIOD" : {
+	    "rows" : [5]
+	}
+
+    }
+
+}
