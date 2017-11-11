@@ -20,3 +20,5 @@ for idx, row in kbd.layout["rows"].iteritems():
             kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(
                 4*col, 3*col, 2*col
             ))
+
+raw_input("Press ENTER to end test")
