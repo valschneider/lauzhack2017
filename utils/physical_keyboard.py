@@ -1,16 +1,19 @@
 import json
 import sys
 import os
+import time
+
+from collections import OrderedDict
+
 from importlib import import_module
-from abstract_keyboard import KeyData
+from abstract_keyboard import KeyData, Colours
 
 basepath = os.path.dirname(os.path.abspath(__file__))
 basepath = os.path.join(basepath, os.pardir)
 
 logi_dir = os.path.join(basepath, "logiPy")
 sys.path.append(logi_dir)
-import logipy.logi_led
-from logipy.logi_led import logi_led_set_lighting_for_key_with_hid_code
+from logipy import logi_led
 
 class PhysicalKeyboard(object):
     def __init__(self, model="g810"):
@@ -18,19 +21,45 @@ class PhysicalKeyboard(object):
         layout_file = os.path.join(layout_dir, model + ".json")
 
         with open(layout_file, 'r') as fh:
-            layout = json.load(fh)
+            layout = json.load(fh, object_pairs_hook=OrderedDict)
 
         self.keys = {}
+        self.layout = {}
+        self.layout["rows"] = {}
+
         for key, data in layout["keys"].iteritems():
             # Load keycodes from logiPy
             self.keys[key] = {
                 "data" : KeyData(),
-                "keycode" : getattr(logipy.logi_led, key),
+                "keycode" : int(getattr(logi_led, key)),
                 "rows" : data["rows"]
             }
+
+            for row in data["rows"]:
+                if row not in self.layout["rows"].keys():
+                    self.layout["rows"][row] = []
+
+                self.layout["rows"][row].append(key)
 
         logi_led.logi_led_init()
         time.sleep(1)
 
-    def set_key_colour(self, keycode):
-        logi_led_set_lighting_for_key_with_hid_code(keycode, 100, 0, 0)
+    def __del__(self):
+        logi_led.logi_led_shutdown()
+
+    def stop_effects(self):
+        return logi_led.logi_led_stop_effects()
+
+    def set_all_colour(self, colour):
+        return logi_led.logi_led_set_lighting(
+            colour.r, colour.g, colour.b
+        )
+
+    def set_key_colour(self, key, colour):
+        res = logi_led.logi_led_set_lighting_for_key_with_scan_code(
+            self.keys[key]["keycode"], colour.r, colour.g, colour.b
+        )
+
+        self.keys[key]["data"].colours = colour
+
+        return res
