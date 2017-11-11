@@ -15,10 +15,15 @@ from utils import PhysicalKeyboard
 from utils import Colours
 
 kbd = PhysicalKeyboard()
+
 music_loop = [[False for x in xrange(10)] for y in xrange(4)] 
+mesure = 0
 
 def start_loop(delay):
-    time.sleep(delay)
+    global mesure 
+    mesure = mesure + 1
+    print(mesure)
+    #time.sleep(delay)
 
 def welcome():
     print("welcome to the synthe demo !")
@@ -30,7 +35,7 @@ def welcome():
 
 def user_input():
     #melodie_keys = raw_input("please enter the melody :")
-    melodie_keys = "awxdrvgznji,lp-"
+    melodie_keys = "qscrgnuk."
     x = y = 0
     for idx, row in kbd.layout["rows"].iteritems():
         if idx > 0 and idx <= 4:
@@ -48,21 +53,18 @@ def user_input():
                 y = y+1
             x = x+1
 
-    #line = ""
-    #for idx in range(4):
-    #    for idy in range(10):
-    #        if music_loop[idx][idy] == True:
-    #            line = line + "1"
-    #        else:
-    #            line = line + "0"
-    #    print(line)
-    #    line = ""
+    line = ""
+    for idx in range(4):
+        for idy in range(10):
+            if music_loop[idx][idy] == True:
+                line = line + "1"
+            else:
+                line = line + "0"
+        print(line)
+        line = ""
 
-def main():
-    # game logic
-    welcome()
-    user_input()
-    start_loop(2)
+def audio_blocking():
+    CHUNK = 1024
 
     sound1 = wave.open("audio/bell.wav", 'rb')
     sound2 = wave.open("audio/snare.wav", 'rb')
@@ -70,6 +72,75 @@ def main():
     sound4 = wave.open("audio/bass_drum.wav", 'rb')
 
     # instantiate PyAudio (1)
+    p = pyaudio.PyAudio()
+
+    # open stream (2)
+    stream = p.open(format=p.get_format_from_width(sound1.getsampwidth()),
+                    channels=sound1.getnchannels(),
+                    rate=sound1.getframerate(),
+                    output=True)
+
+    # read data
+    data = sound1.readframes(CHUNK)
+
+    data1 = sound1.readframes(CHUNK)
+    data2 = sound2.readframes(CHUNK)
+    data3 = sound3.readframes(CHUNK)
+    data4 = sound4.readframes(CHUNK)
+    decodeddata1 = numpy.fromstring(data1, numpy.int16)
+    decodeddata2 = numpy.fromstring(data2, numpy.int16)
+    decodeddata3 = numpy.fromstring(data3, numpy.int16)
+    decodeddata4 = numpy.fromstring(data4, numpy.int16)
+
+
+    sound_debug = ""
+    if music_loop[0][mesure] == True:
+        decodeddata = decodeddata1
+        sound_debug = "1"
+    else:
+        if music_loop[1][mesure] == True:
+            decodeddata = decodeddata2
+            sound_debug = "2"
+        else:
+            if music_loop[2][mesure] == True:
+                decodeddata = decodeddata3
+                sound_debug = "3"
+            else:
+                if music_loop[3][mesure] == True:
+                    decodeddata = decodeddata4
+                    sound_debug = "4"
+                else:
+                    return
+
+    if music_loop[1][mesure] == True:
+            decodeddata = decodeddata + decodeddata2
+            sound_debug = sound_debug + "2"
+    if music_loop[2][mesure] == True:
+            decodeddata = decodeddata + decodeddata3
+            sound_debug = sound_debug + "3"
+    if music_loop[3][mesure] == True:
+            decodeddata = decodeddata + decodeddata4
+            sound_debug = sound_debug +  "4"
+
+    print(sound_debug)
+    newdata = (decodeddata).astype(numpy.int16)
+
+    #newdata = (decodeddata1 * 0.25 + decodeddata2* 0.25 + decodeddata3 * 0.25 + decodeddata4* 0.25).astype(numpy.int16)
+
+    # play stream (3)
+    while len(newdata) > 0:
+        stream.write(newdata)
+        newdata = sound2.readframes(CHUNK)
+
+    # stop stream (4)
+    stream.stop_stream()
+    stream.close()
+
+    # close PyAudio (5)
+    p.terminate()
+
+def audio_callback():
+        # instantiate PyAudio (1)
     p = pyaudio.PyAudio()
 
     # define callback (2)
@@ -89,7 +160,32 @@ def main():
         decodeddata2 = numpy.fromstring(data2, numpy.int16)
         decodeddata3 = numpy.fromstring(data3, numpy.int16)
         decodeddata4 = numpy.fromstring(data4, numpy.int16)
-        newdata = (decodeddata1 * 0.25 + decodeddata2* 0.25 + decodeddata3 * 0.25 + decodeddata4* 0.25).astype(numpy.int16)
+
+
+        if music_loop[0][mesure] == True:
+            decodeddata = decodeddata1
+        else:
+            if music_loop[1][mesure] == True:
+                decodeddata = decodeddata2
+            else:
+                if music_loop[2][mesure] == True:
+                    decodeddata = decodeddata3
+                else:
+                    if music_loop[3][mesure] == True:
+                        decodeddata = decodeddata2
+                    else:
+                        return
+
+        if music_loop[1][mesure] == True:
+                decodeddata = decodeddata + decodeddata2
+        if music_loop[2][mesure] == True:
+                decodeddata = decodeddata + decodeddata3
+        if music_loop[3][mesure] == True:
+                decodeddata = decodeddata + decodeddata4
+
+        newdata = (decodeddata).astype(numpy.int16)
+
+        #newdata = (decodeddata1 * 0.25 + decodeddata2* 0.25 + decodeddata3 * 0.25 + decodeddata4* 0.25).astype(numpy.int16)
         return (newdata, pyaudio.paContinue)
 
     # open stream using callback (3)
@@ -108,6 +204,19 @@ def main():
 
     # stop stream (6)
     stream.stop_stream()
+
+def main():
+    # game logic
+    welcome()
+    user_input()
+
+    while True:
+
+        audio_blocking()
+        start_loop(2)
+        if mesure == 10:
+            break
+
     stream.close()
     sound1.close()
 
