@@ -55,7 +55,11 @@ class PhysicalKeyboard(object):
             colour.r, colour.g, colour.b
         )
 
-    def set_key_colour(self, keycode, colour):
-        return logi_led.logi_led_set_lighting_for_key_with_scan_code(
-            keycode, colour.r, colour.g, colour.b
+    def set_key_colour(self, key, colour):
+        res = logi_led.logi_led_set_lighting_for_key_with_scan_code(
+            self.keys[key]["keycode"], colour.r, colour.g, colour.b
         )
+
+        self.keys[key]["data"].colours = colour
+
+        return res

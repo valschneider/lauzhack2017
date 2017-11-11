@@ -11,13 +11,13 @@ from utils import Colours
 kbd = PhysicalKeyboard()
 
 for idx, row in kbd.layout["rows"].iteritems():
-    for col, key in enumerate(row):
+    for key in row:
         if (idx % 2) == 0:
-            kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(
+            kbd.set_key_colour(key, Colours(
                 100, 0, 0
             ))
         else:
-            kbd.set_key_colour(kbd.keys[key]["keycode"], Colours(
+            kbd.set_key_colour(key, Colours(
                 0, 0, 100
             ))
 
