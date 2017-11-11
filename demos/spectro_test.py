@@ -16,4 +16,6 @@ for i in xrange(len(spectro.freqs)):
 
 spectro.update_phys_kbd()
 
+#print kbd.layout["rows"]
+
 raw_input("Press ENTER to end test")
