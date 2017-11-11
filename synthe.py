@@ -1,16 +1,117 @@
+import time
+import random
+import string
+import pyaudio 
+import wave
+import numpy
 from utils.abstract_keyboard import *
 from utils.abstract_keyboard_display import *
 
-def main():
-    # init a the absract keyboard with data
-    abs_key = AbstractKeyboard()
-    for x in xrange(abs_key.length):
-        for y in xrange(abs_key.width):
-            abs_key.keys[y][x].colors = Colors(x*256/abs_key.length,y*256/abs_key.width,(x+y)*2)
+basepath = os.path.dirname(os.path.abspath(__file__))
+basepath = os.path.abspath(os.path.join(basepath, os.pardir))
 
-    # create a disply with the abstract display
-    disp = AbstractKeyboardDisplay(abs_key)
-    disp.display()
-    disp.wait_user_interaction()
+sys.path.append(basepath)
+from utils import PhysicalKeyboard
+from utils import Colours
+
+kbd = PhysicalKeyboard()
+music_loop = [[False for x in xrange(10)] for y in xrange(4)] 
+
+def start_loop(delay):
+    time.sleep(delay)
+
+def welcome():
+    print("welcome to the synthe demo !")
+    print("1) bell")
+    print("2) snare")
+    print("3) crash cymbal")
+    print("4) drum")
+    print("enter to start the loop")
+
+def user_input():
+    #melodie_keys = raw_input("please enter the melody :")
+    melodie_keys = "awxdrvgznji,lp-"
+    x = y = 0
+    for idx, row in kbd.layout["rows"].iteritems():
+        if idx > 0 and idx <= 4:
+            y = 0
+            for key in row:
+                #print(idx,x,y)
+                if y < 11:
+                    if(key in melodie_keys.upper() ):
+                        #print("keys founds")
+                        music_loop[x][y-1] = True
+                    else:
+                        music_loop[x][y-1] = False
+                else:
+                    break
+                y = y+1
+            x = x+1
+
+    #line = ""
+    #for idx in range(4):
+    #    for idy in range(10):
+    #        if music_loop[idx][idy] == True:
+    #            line = line + "1"
+    #        else:
+    #            line = line + "0"
+    #    print(line)
+    #    line = ""
+
+def main():
+    # game logic
+    welcome()
+    user_input()
+    start_loop(2)
+
+    sound1 = wave.open("audio/bell.wav", 'rb')
+    sound2 = wave.open("audio/snare.wav", 'rb')
+    sound3 = wave.open("audio/crash_cymbal.wav", 'rb')
+    sound4 = wave.open("audio/bass_drum.wav", 'rb')
+
+    # instantiate PyAudio (1)
+    p = pyaudio.PyAudio()
+
+    # define callback (2)
+    #def callback(in_data, frame_count, time_info, status):
+    #    data1 = sound1.readframes(frame_count)
+    #    data2 = sound2.readframes(frame_count)
+    #    decodeddata1 = numpy.fromstring(data1, numpy.int16)
+    #    decodeddata2 = numpy.fromstring(data2, numpy.int16)
+    #    newdata = (decodeddata1 * 0.5 + decodeddata2* 0.5).astype(numpy.int16)
+    #    return (result.tostring(), pyaudio.paContinue)
+    def callback(in_data, frame_count, time_info, status):
+        data1 = sound1.readframes(frame_count)
+        data2 = sound2.readframes(frame_count)
+        data3 = sound3.readframes(frame_count)
+        data4 = sound4.readframes(frame_count)
+        decodeddata1 = numpy.fromstring(data1, numpy.int16)
+        decodeddata2 = numpy.fromstring(data2, numpy.int16)
+        decodeddata3 = numpy.fromstring(data3, numpy.int16)
+        decodeddata4 = numpy.fromstring(data4, numpy.int16)
+        newdata = (decodeddata1 * 0.25 + decodeddata2* 0.25 + decodeddata3 * 0.25 + decodeddata4* 0.25).astype(numpy.int16)
+        return (newdata, pyaudio.paContinue)
+
+    # open stream using callback (3)
+    stream = p.open(format=p.get_format_from_width(sound1.getsampwidth()),
+                    channels=sound1.getnchannels(),
+                    rate=sound1.getframerate(),
+                    output=True,
+                    stream_callback=callback)
+
+    # start the stream (4)
+    stream.start_stream()
+
+    # wait for stream to finish (5)
+    while stream.is_active():
+        time.sleep(0.1)
+
+    # stop stream (6)
+    stream.stop_stream()
+    stream.close()
+    sound1.close()
+
+    # close PyAudio (7)
+    p.terminate()
 
 main()
