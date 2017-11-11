@@ -27,37 +27,3 @@ class AbstractKeyboardDisplay:
         message.draw(self.win)
         self.win.getMouse()
         self.win.close()
-
-def main():
-    # init a the absract keyboard with data
-    abs_key = AbstractKeyboard()
-    for x in xrange(abs_key.length):
-        for y in xrange(abs_key.width):
-            abs_key.keys[y][x].colors = Colors(x*256/abs_key.length,y*256/abs_key.width,(x+y)*2)
-
-    # create a disply with the abstract display
-    disp = AbstractKeyboardDisplay(abs_key)
-    disp.display()
-    disp.wait_user_interaction()
-
-
-def blop():
-    win = GraphWin('Abstract Keyboard viewer', width, height) # give title and dimensions
-
-    head = Circle(Point(40,100), 25) # set center and radius
-    head.setFill("yellow")
-    head.draw(win)
-
-    eye1 = Circle(Point(30, 105), 5)
-    eye1.setFill('blue')
-    eye1.draw(win)
-
-    eye2 = Line(Point(45, 105), Point(55, 105)) # set endpoints
-    eye2.setWidth(3)
-    eye2.draw(win)
-
-    mouth = Oval(Point(30, 90), Point(50, 85)) # set corners of bounding box
-    mouth.setFill("red")
-    mouth.draw(win)
-
-main()
