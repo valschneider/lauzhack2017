@@ -19,6 +19,7 @@ def start_sequence(seq, n,delay):
             print seq[x]
             kbd.set_key_colour(seq[x].upper(), Colours(100, 0, 0))
             time.sleep(delay)
+            kbd.set_all_colour(Colours(0,0,0))
 
 def welcome():
     print("welcome to the Follow Me game !")
