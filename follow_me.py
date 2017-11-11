@@ -6,6 +6,8 @@ from utils.abstract_keyboard_display import *
 from utils import PhysicalKeyboard
 
 kbd = PhysicalKeyboard()
+#ak = AbstractKeyboard()
+#kbd = AbstractKeyboardDisplay(ak)
 
 def generate_sequence():
     seq = ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
