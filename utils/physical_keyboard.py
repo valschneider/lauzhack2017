@@ -1,6 +1,8 @@
 import json
 import sys
 import os
+import time
+
 from importlib import import_module
 from abstract_keyboard import KeyData
 
@@ -9,8 +11,7 @@ basepath = os.path.join(basepath, os.pardir)
 
 logi_dir = os.path.join(basepath, "logiPy")
 sys.path.append(logi_dir)
-import logipy.logi_led
-from logipy.logi_led import logi_led_set_lighting_for_key_with_hid_code
+from logipy import logi_led
 
 class PhysicalKeyboard(object):
     def __init__(self, model="g810"):
@@ -25,7 +26,7 @@ class PhysicalKeyboard(object):
             # Load keycodes from logiPy
             self.keys[key] = {
                 "data" : KeyData(),
-                "keycode" : getattr(logipy.logi_led, key),
+                "keycode" : getattr(logi_led, key),
                 "rows" : data["rows"]
             }
 
@@ -33,4 +34,4 @@ class PhysicalKeyboard(object):
         time.sleep(1)
 
     def set_key_colour(self, keycode):
-        logi_led_set_lighting_for_key_with_hid_code(keycode, 100, 0, 0)
+        logi_led.logi_led_set_lighting_for_key_with_hid_code(keycode, 100, 0, 0)
