@@ -17,9 +17,9 @@ def start_sequence(seq, n,delay):
         kbd.set_all_colour(Colours(0,0,0))
         for x in xrange(n):
             print seq[x]
-            kbd.set_key_colour(seq[x].upper(), Colours(100, 100, 100))
-            if x > 1:
-                kbd.set_key_colour(seq[x-1].upper(), Colours(100, 100, 100))
+            kbd.set_key_colour(seq[x].upper(), Colours(0, 100, 0))
+            if x > 0:
+                kbd.set_key_colour(seq[x-1].upper(), Colours(100, 100, 0))
             time.sleep(delay)
             kbd.set_all_colour(Colours(0,0,0))
 
