@@ -7,8 +7,8 @@ from time import sleep, time
 from utils import Colours
 
 red = Colours(100, 0, 0)
-yellow = Colours(100, 100, 0)
-green = Colours(0, 100, 0)
+orange = Colours(100, 50, 0)
+green = Colours(50, 100, 0)
 cyan = Colours(0, 100, 100)
 blue = Colours(0, 0, 100)
 purple = Colours(100, 0, 100)
@@ -69,7 +69,7 @@ class Spectro(object):
                 elif depth <= 60:
                     colour = green
                 elif depth <= 80:
-                    colour = yellow
+                    colour = orange
                 elif depth <= 100:
                     colour = red
 
