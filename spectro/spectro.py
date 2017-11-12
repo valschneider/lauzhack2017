@@ -1,7 +1,8 @@
 from pylab import *
 from scipy.io import wavfile
+import subprocess
 
-from time import sleep
+from time import sleep, time
 
 from utils import Colours
 
@@ -14,21 +15,28 @@ class Spectro(object):
         sampling_rate, data = wavfile.read(sound_file)
         data = data / (2.**15)
         data = abs(data)
-        data = data * 300
+        data = data * 500
 
         sound_duration = data.shape[0] / sampling_rate
 
-        prev = 0
-        now = 0
-        wait_time = 1./30
+        start = time()
+        prev = 0.0
+        now = 0.0
 
-        while now < data.shape[0]:
+        # 30Hz refresh rate for smoothy display
+        wait_time = 1./30
+        subprocess.Popen(["ffplay", "-nodisp", "-autoexit", sound_file])
+
+        while now < sound_duration:
+            # This is ugly as fuck but it works
             sleep(wait_time)
-            now += int(wait_time * sampling_rate)
-            res = data[prev:now].mean()
-            print res
+            now = time() - start
+
+            res = data[int(prev * sampling_rate):int(now * sampling_rate)].mean()
+
             for i in xrange(len(self.freqs)):
                 self.freqs[i] = int(res)
+
             self.update_phys_kbd()
             prev = now
 
