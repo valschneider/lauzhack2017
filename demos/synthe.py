@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import time
 import random
 import string
@@ -97,13 +99,13 @@ def audio_subprocess(mesure):
 
     with open(os.devnull, 'w') as FNULL:
         if music_loop[0][mesure] == True:
-            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", "audio/snare.wav"], stdout=FNULL, stderr=subprocess.STDOUT)
+            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", os.path.join(basepath, "audio/snare.wav")], stdout=FNULL, stderr=subprocess.STDOUT)
         if music_loop[1][mesure] == True:
-            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", "audio/bass_drum.wav"], stdout=FNULL, stderr=subprocess.STDOUT)
+            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", os.path.join(basepath, "audio/bass_drum.wav")], stdout=FNULL, stderr=subprocess.STDOUT)
         if music_loop[2][mesure] == True:
-            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", "audio/crash_cymbal.wav"], stdout=FNULL, stderr=subprocess.STDOUT)
+            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", os.path.join(basepath, "audio/crash_cymbal.wav")], stdout=FNULL, stderr=subprocess.STDOUT)
         if music_loop[3][mesure] == True:
-            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", "audio/bell.wav"], stdout=FNULL, stderr=subprocess.STDOUT)
+            subprocess.Popen(["ffplay", "-nodisp", "-autoexit", os.path.join(basepath, "audio/bell.wav")], stdout=FNULL, stderr=subprocess.STDOUT)
 
 def main():
     # game logic
