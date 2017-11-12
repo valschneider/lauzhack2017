@@ -26,7 +26,7 @@ class Spectro(object):
         sampling_rate, data = wavfile.read(sound_file)
         data = data / (2.**15)
         data = abs(data)
-        # In average, more than half the keyboard is list
+        # In average, more than half the keyboard is lit
         data = data * (50. / data.mean())
         #data = data * 500
 
