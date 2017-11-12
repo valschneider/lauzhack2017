@@ -4,6 +4,7 @@ import string
 import pyaudio 
 import wave
 import numpy
+import threading
 from utils.abstract_keyboard import *
 from utils.abstract_keyboard_display import *
 
@@ -35,7 +36,7 @@ def welcome():
 
 def user_input():
     #melodie_keys = raw_input("please enter the melody :")
-    melodie_keys = "qscrgnuk."
+    melodie_keys = "yaswcerfvthn."
     x = y = 0
     for idx, row in kbd.layout["rows"].iteritems():
         if idx > 0 and idx <= 4:
@@ -62,6 +63,53 @@ def user_input():
                 line = line + "0"
         print(line)
         line = ""
+
+def audio_thread(audio, file):
+    CHUNK = 1024
+
+    sound = wave.open(file, 'rb')
+
+    # open stream (2)
+    stream = audio.open(format=audio.get_format_from_width(sound.getsampwidth()),
+                channels=sound.getnchannels(),
+                rate=sound.getframerate(),
+                output=True)
+
+    # read data
+    data = sound.readframes(CHUNK)
+
+    # play stream (3)
+    while len(data) > 0:
+        stream.write(data)
+        data = sound.readframes(CHUNK)
+
+    # stop stream (4)
+    stream.stop_stream()
+    stream.close()
+
+def audio_threading():
+    # instantiate PyAudio (1)
+    p = pyaudio.PyAudio()
+
+    if music_loop[0][mesure] == True:
+        threading.Thread(target=audio_thread(p,"audio/snare.wav")).start()
+        #t1 = threading.Thread(target=audio_thread, args=("audio/snare.wav",), kwargs={'rate':44100})
+        #t1.start()
+    if music_loop[1][mesure] == True:
+        threading.Thread(target=audio_thread(p,"audio/bass_drum.wav")).start()
+        #t2 = threading.Thread(target=audio_thread, args=("audio/bass_drum.wav",), kwargs={'rate':44100})
+        #t2.start()
+    if music_loop[2][mesure] == True:
+        threading.Thread(target=audio_thread(p,"audio/crash_cymbal.wav")).start()
+        #t3 = threading.Thread(target=audio_thread, args=(sound,), kwargs={'rate':44100})
+        #t3.start()
+    if music_loop[3][mesure] == True:
+        threading.Thread(target=audio_thread(p,"audio/bell.wav")).start()
+        #t4 = threading.Thread(target=audio_thread, args=(sound,), kwargs={'rate':44100})
+        #t4.start()
+
+    # close PyAudio (5)
+    p.terminate()
 
 def audio_blocking():
     CHUNK = 1024
@@ -212,7 +260,7 @@ def main():
 
     while True:
 
-        audio_blocking()
+        audio_threading()
         start_loop(2)
         if mesure == 10:
             break
